@@ -10,6 +10,17 @@ class User:
 
     @classmethod
     def get(cls, user_id):
+        """Fetch a User by primary key from the in-memory store.
+
+        Args:
+            user_id: Integer ID of the user to retrieve.
+
+        Returns:
+            A User instance populated with the stored data.
+
+        Raises:
+            KeyError: If no user with the given id exists.
+        """
         row = _USERS.get(user_id)
         if row is None:
             raise KeyError(f"no user with id {user_id}")

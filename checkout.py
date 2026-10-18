@@ -16,7 +16,18 @@ SHIPPING_FLAT = 599
 
 
 def line_items(cart):
-    """cart: dict of sku -> quantity. Returns a list of priced line items."""
+    """Convert a cart mapping into a list of priced line items.
+
+    Args:
+        cart: Dict mapping SKU strings to integer quantities.
+
+    Returns:
+        List of dicts, each with keys ``sku``, ``qty``, and ``cents``
+        (total price for that line in cents).
+
+    Raises:
+        ValueError: If a SKU is not in the catalog or a quantity is <= 0.
+    """
     items = []
     for sku, qty in cart.items():
         if sku not in PRICES:
@@ -28,10 +39,26 @@ def line_items(cart):
 
 
 def subtotal(items):
+    """Sum the ``cents`` values across all line items.
+
+    Args:
+        items: List of line-item dicts as returned by :func:`line_items`.
+
+    Returns:
+        Integer total in cents before tax and shipping.
+    """
     return sum(item["cents"] for item in items)
 
 
 def shipping(sub):
+    """Compute flat-rate shipping, waived above the free-shipping threshold.
+
+    Args:
+        sub: Subtotal in cents.
+
+    Returns:
+        Integer shipping cost in cents (0 if subtotal >= FREE_SHIPPING_OVER).
+    """
     return 0 if sub >= FREE_SHIPPING_OVER else SHIPPING_FLAT
 
 

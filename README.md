@@ -1,6 +1,6 @@
 # coalesce_demo_repo
 
-The small Python app that the agents work on during the Coalesce demo (contract section 13).
+The small Python app that the agents work on during the Coalesce demo.
 
 - `models.py`: `User` (id, name, email) with an in-memory store
 - `services/user.py`: `get_user(user_id)` returns a `User`
